@@ -7,6 +7,7 @@
 // "node:" para diferenciar entre módulo interno e de terceiros
 import http from 'node:http' 
 import { json } from './middlewares/json.js'
+import { Database } from './middlewares/database.js'
 
 // GET, POST, PUT, PATCH, DELETE
 
@@ -22,7 +23,7 @@ import { json } from './middlewares/json.js'
 
 // HTTP Status Code
 
-const users = []
+const database = new Database()
 
 const server = http.createServer(async (req, res) => {
   const { method, url } = req
@@ -30,19 +31,22 @@ const server = http.createServer(async (req, res) => {
   await json(req, res)
 
   if (method === 'GET' && url === '/users') {
+    const users = database.select('users')
+    
     //early return
-    return res
-            .end(JSON.stringify(users))
+    return res.end(JSON.stringify(users))
   }
 
   if (method === 'POST' && url === '/users') {
     const { name, email } = req.body
 
-    users.push({
+    const user = {
       id: 1,
       name,
       email,
-    })
+    }
+
+    database.insert('users', user)
 
     return res.writeHead(201).end()
   }
