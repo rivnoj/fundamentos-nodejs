@@ -7,7 +7,26 @@
 // "node:" para diferenciar entre módulo interno e de terceiros
 import http from 'node:http' 
 
+// GET, POST, PUT, PATCH, DELETE
+
+//GET => buscar recurso do back-end
+//POST => criar uma informação no back-end
+//PUT => atualizar um recurso no back-end
+//PATCH => atualizar uma informação específica de um recurso no back-end
+//DELETE => remover um recurso do back-end
+
 const server = http.createServer((req, res) => {
+  const { method, url } = req
+
+  if (method === 'GET' && url === '/users') {
+    //early return
+    return res.end('Listagem de usuários')
+  }
+
+  if (method === 'POST' && url === '/users') {
+    return res.end('Criação de usuário')
+  }
+
   return res.end('Hello word')
 })
 
