@@ -15,15 +15,29 @@ import http from 'node:http'
 //PATCH => atualizar uma informação específica de um recurso no back-end
 //DELETE => remover um recurso do back-end
 
+// JSON - JavaScript Object Notation
+
+// Cabeçalhos (requisição/resposta) -> Metadados
+
+const users = []
+
 const server = http.createServer((req, res) => {
   const { method, url } = req
 
   if (method === 'GET' && url === '/users') {
     //early return
-    return res.end('Listagem de usuários')
+    return res
+            .setHeader('Content-type', 'application/json')
+            .end(JSON.stringify(users))
   }
 
   if (method === 'POST' && url === '/users') {
+    users.push({
+      id: 1,
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+    })
+
     return res.end('Criação de usuário')
   }
 
