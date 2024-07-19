@@ -7,7 +7,7 @@
 // "node:" para diferenciar entre módulo interno e de terceiros
 import http from 'node:http' 
 import { json } from './middlewares/json.js'
-import { Database } from './middlewares/database.js'
+import { Database } from './database.js'
 
 // GET, POST, PUT, PATCH, DELETE
 
